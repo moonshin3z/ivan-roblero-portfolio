@@ -7,11 +7,28 @@
   <meta name="description" content="Portfolio personal de Iván Roblero — Desarrollador de software">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #faf9f5; display: flex; align-items: center; justify-content: center; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
-    #__bundler_loading { position: fixed; bottom: 20px; right: 20px; font: 13px/1.4 -apple-system, BlinkMacSystemFont, sans-serif; color: #666; background: #fff; padding: 8px 14px; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.12); z-index: 10000; }
-    #__bundler_thumbnail { position: fixed; inset: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #faf9f5; z-index: 9999; }
+    body { background: #08070c; display: flex; align-items: center; justify-content: center; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+    #__bundler_loading { position: fixed; bottom: 20px; right: 20px; font: 13px/1.4 -apple-system, BlinkMacSystemFont, sans-serif; color: transparent; z-index: 10000; }
+    #__bundler_thumbnail { position: fixed; inset: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 32px; background: #08070c; z-index: 9999; transition: opacity 0.6s ease; }
     #__bundler_thumbnail svg { width: 100%; height: 100%; object-fit: contain; }
     #__bundler_placeholder { color: #999; font-size: 14px; }
+
+    .orbit-loader { position: relative; width: 120px; height: 120px; }
+    .orbit-loader .ring { position: absolute; inset: 0; border-radius: 50%; border: 1px solid transparent; }
+    .orbit-loader .ring-1 { border-top-color: #ff8a4c; animation: orbit-spin 1.8s cubic-bezier(0.5,0,0.5,1) infinite; }
+    .orbit-loader .ring-2 { inset: 12px; border-right-color: #a855f7; animation: orbit-spin 1.4s cubic-bezier(0.5,0,0.5,1) infinite reverse; }
+    .orbit-loader .ring-3 { inset: 24px; border-bottom-color: rgba(255,138,76,0.5); animation: orbit-spin 2.2s cubic-bezier(0.5,0,0.5,1) infinite; }
+    .orbit-loader .dot { position: absolute; width: 8px; height: 8px; border-radius: 50%; }
+    .orbit-loader .dot-1 { top: -4px; left: 50%; margin-left: -4px; background: #ff8a4c; box-shadow: 0 0 12px #ff8a4c, 0 0 24px rgba(255,138,76,0.4); animation: orbit-spin 1.8s cubic-bezier(0.5,0,0.5,1) infinite; transform-origin: 4px 64px; }
+    .orbit-loader .dot-2 { top: 50%; right: -4px; margin-top: -4px; background: #a855f7; box-shadow: 0 0 12px #a855f7, 0 0 24px rgba(168,85,247,0.4); animation: orbit-spin 1.4s cubic-bezier(0.5,0,0.5,1) infinite reverse; transform-origin: -44px 4px; }
+    .orbit-loader .dot-3 { bottom: -4px; left: 50%; margin-left: -4px; background: rgba(255,138,76,0.6); box-shadow: 0 0 8px rgba(255,138,76,0.3); animation: orbit-spin 2.2s cubic-bezier(0.5,0,0.5,1) infinite; transform-origin: 4px -32px; width: 6px; height: 6px; }
+    .orbit-loader .center-glow { position: absolute; inset: 36px; border-radius: 50%; background: radial-gradient(circle, rgba(255,138,76,0.15) 0%, transparent 70%); animation: orbit-pulse 2.4s ease-in-out infinite; }
+    @keyframes orbit-spin { to { transform: rotate(360deg); } }
+    @keyframes orbit-pulse { 0%,100% { opacity: 0.4; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.1); } }
+
+    .loader-text { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: #7a7690; }
+    .loader-text .loader-dots::after { content: ''; animation: loader-dots 1.5s steps(3) infinite; }
+    @keyframes loader-dots { 0% { content: ''; } 33% { content: '.'; } 66% { content: '..'; } 100% { content: '...'; } }
   </style>
   <noscript>
     <style>#__bundler_loading { display: none; }</style>
@@ -21,7 +38,18 @@
   </noscript>
 </head>
 <body>
-  <div id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a855f7"></stop><stop offset="1" stop-color="#ff8a4c"></stop></linearGradient></defs><rect width="100" height="100" fill="#08070c"></rect><circle cx="50" cy="50" r="34" fill="url(#g)"></circle><text x="50" y="50" font-family="monospace" font-size="24" font-weight="700" fill="#08070c" text-anchor="middle" dominant-baseline="central">&lt;IR/&gt;</text></svg></div>
+  <div id="__bundler_thumbnail">
+    <div class="orbit-loader">
+      <div class="ring ring-1"></div>
+      <div class="ring ring-2"></div>
+      <div class="ring ring-3"></div>
+      <div class="dot dot-1"></div>
+      <div class="dot dot-2"></div>
+      <div class="dot dot-3"></div>
+      <div class="center-glow"></div>
+    </div>
+    <div class="loader-text">Loading<span class="loader-dots"></span></div>
+  </div>
   <div id="__bundler_loading">Unpacking...</div>
 
   <script>
